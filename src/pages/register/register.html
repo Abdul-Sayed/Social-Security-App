@@ -1,31 +1,95 @@
-<!--
-  Generated template for the RegisterPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
-
   <ion-navbar>
-    <ion-title>registerPage</ion-title>
+    <ion-title>SSWHEN</ion-title>
   </ion-navbar>
-
 </ion-header>
 
-
-<ion-content padding>
-  
-  <ion-grid>
-    
-    <ion-form>
-      Dropdown inputs
-    </ion-form>
-    
-    <ion-button>
-      Submit registration info
-    </ion-button>
-    
-    
+<ion-content>
+  <ion-grid no-padding fixed>
+    <ion-row>
+      <ion-col>
+        <h1 text-center ion-text color="primary"><strong>Registration</strong></h1>
+        <ion-card>
+          <ion-card-header>
+            <h2 ion-text color="primary">Please enter your information to register:</h2>
+          </ion-card-header>
+          <ion-card-content padding-horizontal padding-bottom>
+            <form [formGroup]="registerForm">
+              <ion-list>
+                
+                <!--MARITAL STATUS-->
+                <ion-item no-padding>
+                  <ion-label color="secondary" stacked>Marital Status:
+                    <ion-icon name="contacts" float-right></ion-icon>
+                  </ion-label>
+                  <ion-select formControlName="maritalStatus" [(ngModel)]="maritalStatus">
+                    <ion-option value="'single'">Single</ion-option>
+                    <ion-option value="'married'">Married</ion-option>
+                  </ion-select>
+                </ion-item>
+                <hr>
+                <!--TOTAL TAX CONTRIBUTION-->
+                <ion-item no-padding>
+                  <ion-label color="secondary" stacked>Total Tax Contribution:
+                    <ion-icon name="cash" float-right></ion-icon>
+                  </ion-label>
+                  <ion-input formControlName="totalTaxContribution" type="number" [(ngModel)]="totalTaxContribution"></ion-input>
+                </ion-item>
+                <div padding-top *ngIf="!registerForm.controls.totalTaxContribution.valid && (registerForm.controls.totalTaxContribution.dirty || submitAttempt)">
+                  <p ion-text color="danger">Please enter your total tax contribution</p>
+                </div>
+                <hr>
+                <!--EMAIL-->
+                <ion-item no-padding>
+                  <ion-label color="secondary" stacked>Email:
+                    <ion-icon name="mail" float-right></ion-icon>
+                  </ion-label>
+                  <ion-input formControlName="email" type="email" [(ngModel)]="email"></ion-input>
+                </ion-item>
+                <div padding-top *ngIf="!registerForm.controls.email.valid && (registerForm.controls.email.dirty || submitAttempt)">
+                  <p ion-text color="danger">Please fill in your email</p>
+                </div>
+                <hr>
+                <!--PASSWORD-->
+                <ion-item no-padding>
+                  <ion-label color="secondary" stacked>Password:</ion-label>
+                  <button *ngIf="!showPass" ion-button clear color="dark" type="button" item-right (click)="showPassword()"> <ion-icon name="ios-eye-off-outline"></ion-icon></button>
+                  <button *ngIf="showPass" ion-button clear color="dark" type="button" item-right (click)="showPassword()"> <ion-icon name="ios-eye-outline"></ion-icon></button>
+                  <ion-input formControlName="password" type="{{type}}" [(ngModel)]="password" required validateEqual="confirmPassword" reverse="true"></ion-input>
+                  <ion-icon name="lock" float-right></ion-icon>
+                </ion-item>
+                <hr>
+                <ion-item no-padding>
+                  <ion-label color="secondary" stacked>Retype Password:</ion-label>
+                  <button *ngIf="!showPass" ion-button clear color="dark" type="button" item-right (click)="showPassword()"> <ion-icon name="ios-eye-off-outline"></ion-icon></button>
+                  <button *ngIf="showPass" ion-button clear color="dark" type="button" item-right (click)="showPassword()"> <ion-icon name="ios-eye-outline"></ion-icon></button>
+                  <ion-input formControlName="confirmPassword" type="{{type}}" [ngModel]="confirmPassword" required validateEqual="password"></ion-input>
+                  <ion-icon name="lock" float-right></ion-icon>
+                </ion-item>
+                
+                
+                <div padding-top *ngIf="!registerForm.controls.password.valid && (registerForm.controls.password.dirty || submitAttempt)">
+                  <p ion-text color="danger">Please fill in your password</p>
+                  <p ion-text color="danger">Password must contain 1 number (0-9)</p>
+                  <p ion-text color="danger">Password must contain 1 uppercase letters</p>
+                  <p ion-text color="danger">Password must contain 1 lowercase letter</p>
+                  <p ion-text color="danger">Password must contain 1 non-alpha numeric number (!@#$)</p>
+                  <p ion-text color="danger">Password must be between 6 and 12 characters long</p>
+                </div>
+                
+              </ion-list>
+              <div *ngIf='isError'>
+                <h4 text-center>{{errorMessage}}</h4>
+              </div>
+            </form>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+    <ion-row justify-content-center padding-horizontal>
+      <ion-col>
+        <button ion-button icon-end block full (click)="submit()" >Register</button>
+      </ion-col>
+    </ion-row>
   </ion-grid>
-
 </ion-content>

@@ -1,59 +1,140 @@
-<!--
-  Generated template for the DashboardPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
-
-  <ion-navbar>
-    <ion-title>dashboardPage</ion-title>
+  <ion-navbar hideBackButton="true">
+    <ion-title>SSWhen</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="presentLanguagePopover($event)">
+        <ion-icon name="more"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
-
 </ion-header>
 
+<ion-content>
+  <ion-grid no-padding fixed>
+    
+    <ion-row align-items-center padding-horizontal>
+      <ion-col align-self-start>
+        <h1 ion-text color="primary"><strong>Dashboard</strong></h1>
+      </ion-col>
+      <ion-col align-self-end>
+        <button ion-button float-end color="light" icon-end (click)="presentAccountPopover($event)">
+          <ion-icon name="person"></ion-icon>
+          <ion-icon name="arrow-dropdown"></ion-icon>
+        </button>
+      </ion-col>
+    </ion-row>
 
-<ion-content padding>
+    <ion-row align-items-center no-padding>
+      <ion-col>
+        <ion-card>
+          <ion-card-content padding-horizontal>
+            <ion-row align-items-center>
+              <ion-col>
+                <h2 ion-text color="primary" #changeText>User Information</h2>
+              </ion-col>
+              <ion-col>
+                <button style="vertical-align: top;" class="btn-smaller" ion-button icon-only float-end color="dark" (click)="isEditable()">
+                  <ion-icon name="create"></ion-icon>
+                </button>
+              </ion-col>
+            </ion-row>
+            <ion-row align-items-start>
+              <ion-col>
+                <div #changeText><strong>Life Expectancy:</strong>
+                  <button ion-button icon-only small clear on-click="lifeExpectancyAlert()" class="customBtn">
+                    <ion-icon name="information-circle"></ion-icon>
+                  </button>               
+                </div>
+                <div #changeText text-left>{{lifeExpectancy}}</div>
+              </ion-col>
+
+              <ion-col>
+                <div #changeText><strong>FRA Age:</strong></div>
+                <div #changeText text-left>{{ageFRA}}</div>
+              </ion-col>
+            </ion-row>
+            <ion-row align-items-start>
+              <ion-col>
+                <div #changeText><strong>FRA Benefit Amount:</strong>
+                  <button ion-button icon-only small clear on-click="fraAlert()" class="customBtn">
+                    <ion-icon name="information-circle"></ion-icon>
+                  </button> 
+                </div>
+                <div #changeText text-left>{{benefitAtFRA | currency:'USD':'symbol-narrow':'4.2-2'}}</div>
+              </ion-col>
+
+              <ion-col>
+                <div #changeText><strong>Total Tax Contribution:</strong></div>
+                <div #changeText text-left>{{totalContribution | currency:'USD':'symbol-narrow':'4.2-2'}}</div>
+              </ion-col>
+            </ion-row>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+
+    <ion-row align-items-center>
+      <ion-col>
+        <div *ngIf="this.loading && !this.dataObject " class="loader">Loading...</div>
+      </ion-col>
+    </ion-row>
+
+    <div *ngIf="this.dataObject ">
+      
+      <ion-row align-items-center no-padding>
+        <ion-col>
+          <ion-card>
+            <ion-card-content padding-horizontal>
+              <div>
+                <ion-segment [(ngModel)]="data">
+                  <ion-segment-button value="monthly">
+                    Monthly
+                  </ion-segment-button>
+                  <ion-segment-button value="cumulative">
+                    Cumulative
+                  </ion-segment-button>
+                </ion-segment>
+              </div>
   
-  <ion-grid>
-    
-    <dropdown-menu>
-      Account
-      Logout
-    </dropdown-menu>
-    
-    <ion-card>
-      User Info Card
-      Edit link/button
-    </ion-card>
-    
-    <ion-segments>
+              <div [ngSwitch]="data">
+                <ion-list *ngSwitchCase="'monthly'">
+                  <ion-row padding-top>
+                    <ion-col col-8>
+                      <p #changeText text-left>Monthly Benefits</p>
+                    </ion-col>
+                    <ion-col col-4>
+                      <a (click)="presentTable('monthly')" float-end color="primary" #changeText>View Table</a>
+                    </ion-col>
+                  </ion-row>
+                  <charts *ngIf="monthlyPay" [ChartType]="chartType" [xAxis]="retYears" [yAxis]="monthlyPay"></charts>
+                </ion-list>
+  
+                <ion-list *ngSwitchCase="'cumulative'">
+                  <ion-row padding-top>
+                    <ion-col col-8>
+                      <p #changeText text-left>Cumulative Benefits</p>
+                    </ion-col>
+                    <ion-col col-4>
+                      <a (click)="presentTable('cumulative')" float-end color="primary" #changeText>View Table</a>
+                    </ion-col>
+                  </ion-row>
+                  <charts *ngIf="totalAccumulated" [ChartType]="chartType" [xAxis]="retYears" [yAxis]="totalAccumulated"></charts>
+                </ion-list>
+              </div>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
       
-      <ion-segment>
-        Monthly Chart
-        View Table button
-        ? helper - chart description
-        
-        <ion-modal>
-          Data Table
-        </ion-modal>
-      
-      </ion-segment>
-        
-      <ion-segment>
-        Cumulative Chart
-        View Table button
-        ? helper - chart description
-        
-        <ion-modal>
-          Data Table
-        </ion-modal>
-        
-      </ion-segment>
-      
-      
-    </ion-segments>
+    </div>
     
+    <ion-row padding-horizontal margin-bottom>
+      <ion-col>
+        <button ion-button icon-start block full (click)="showPrompt()" #changeText>
+          <ion-icon name="send"></ion-icon>
+          Email Result
+        </button>
+      </ion-col>
+    </ion-row>
   </ion-grid>
-
 </ion-content>
