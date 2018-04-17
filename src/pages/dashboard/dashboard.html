@@ -39,39 +39,33 @@
               </ion-col>
             </ion-row>
             <ion-row align-items-start>
-              <ion-col *ngIf="!editable">
-                <div #changeText><strong>Life Expectancy:</strong></div>
-                <div #changeText>{{lifeExpectancy}}</div>
+              <ion-col>
+                <div #changeText><strong>Life Expectancy:</strong>
+                  <button ion-button icon-only small clear on-click="lifeExpectancyAlert()" class="customBtn">
+                    <ion-icon name="information-circle"></ion-icon>
+                  </button>               
+                </div>
+                <div #changeText text-left>{{lifeExpectancy}}</div>
               </ion-col>
-              <ion-col *ngIf="editable">
-                <ion-label #changeText><strong>Life Expectancy:</strong></ion-label>
-                <ion-input #changeText type="text" placeholder="{{lifeExpectancy}}"></ion-input>
-              </ion-col>
-              <ion-col *ngIf="!editable">
+
+              <ion-col>
                 <div #changeText><strong>FRA Age:</strong></div>
-                <div #changeText>{{ageFRA}}</div>
-              </ion-col>
-              <ion-col *ngIf="editable">
-                <ion-label #changeText><strong>FRA Age</strong></ion-label>
-                <ion-input #changeText type="text" placeholder="{{ageFRA}}"></ion-input>
+                <div #changeText text-left>{{ageFRA}}</div>
               </ion-col>
             </ion-row>
             <ion-row align-items-start>
-              <ion-col *ngIf="!editable">
-                <div #changeText><strong>FRA Benefit Amount:</strong></div>
-                <div #changeText>{{benefitAtFRA}}</div>
+              <ion-col>
+                <div #changeText><strong>FRA Benefit Amount:</strong>
+                  <button ion-button icon-only small clear on-click="fraAlert()" class="customBtn">
+                    <ion-icon name="information-circle"></ion-icon>
+                  </button> 
+                </div>
+                <div #changeText text-left>{{benefitAtFRA | currency:'USD':'symbol-narrow':'4.2-2'}}</div>
               </ion-col>
-              <ion-col *ngIf="editable">
-                <ion-label #changeText><strong>FRA Benefit Amount</strong></ion-label>
-                <ion-input #changeText type="text" placeholder="{{benefitAtFRA}}"></ion-input>
-              </ion-col>
-              <ion-col *ngIf="!editable">
+
+              <ion-col>
                 <div #changeText><strong>Total Tax Contribution:</strong></div>
-                <div #changeText>{{totalContribution}}</div>
-              </ion-col>
-              <ion-col *ngIf="editable">
-                <ion-label #changeText><strong>Total Tax Contribution</strong></ion-label>
-                <ion-input #changeText type="text" placeholder="{{totalContribution}}"></ion-input>
+                <div #changeText text-left>{{totalContribution | currency:'USD':'symbol-narrow':'4.2-2'}}</div>
               </ion-col>
             </ion-row>
           </ion-card-content>

@@ -1,6 +1,7 @@
 import {Component, ElementRef, QueryList, ViewChildren, OnInit} from '@angular/core';
 import {AlertController, IonicPage, ModalController, NavController, NavParams, PopoverController} from 'ionic-angular';
 import {PopoverPage} from './popover-page';
+import { CurrencyPipe } from '@angular/common';
 import {ModalDashboardComponent} from '../../components/modal-dashboard/modal-dashboard';
 import {LangaugePopoverComponent} from '../../components/langauge-popover/langauge-popover'; 
 import { CalculationsProvider } from '../../providers/calculations/calculations';
@@ -21,8 +22,6 @@ export class DashboardPage implements OnInit {
   
   @ViewChildren('changeText',  {read: ElementRef}) components: QueryList<ElementRef>;
   data = 'monthly';
-  editable = false;
-  show = false;
   chartType: string = 'bar';
   retYears: any[];
   monthlyPay: any[];
@@ -52,12 +51,39 @@ export class DashboardPage implements OnInit {
     public email$: EmailProvider
   ) {}
 
+  presentTable(type) {
+    let chartType = type;
+    console.log(chartType);
+    let modal = this.modalCtrl.create(ModalDashboardComponent, {
+      'modalType': chartType,
+      'retYears': this.retYears,
+      'tableMonthly': this.dataObject.monthly,
+      'tableAccumulated': this.dataObject.cumulative
+    });
+    
+    modal.present();
+  }
+
+  presentLanguagePopover(myEvent) {
+    let popover = this.popoverCtrl.create(LangaugePopoverComponent, {
+      queryEle: this.components.toArray()
+    });
+    popover.present({
+      ev: myEvent
+    });
+  }
+
+  presentAccountPopover(myEvent) {
+    let popover = this.popoverCtrl.create(PopoverPage, myEvent, { cssClass: 'account-popover'});
+    popover.present({
+      ev: myEvent
+    });
+  }
+  
   isEditable() {
-    this.editable = !this.editable;
-    console.log("editable clicked", this.editable);
     
     let alert = this.alertCtrl.create({
-      title: 'Edit FRA Benefit ?',
+      title: 'Edit FRA Benefit or Life Expectancy ?',
       inputs: [
         {
           name: 'PIA',
@@ -75,7 +101,6 @@ export class DashboardPage implements OnInit {
         {
           text: 'Update',
           handler: data => {
-            this.show = !this.show;
 
             let userModel = {
             email: this.userData$.email,
@@ -86,7 +111,6 @@ export class DashboardPage implements OnInit {
             totalContribution: this.userData$.totalContribution,
             isMarried: this.userData$.isMarried
           }
-                  
             // Update the FRAbenefit property of the SSUser model
             userModel.FRAbenefit = data.PIA;
             
@@ -106,23 +130,26 @@ export class DashboardPage implements OnInit {
     });
     alert.present();
   }
-
-  presentLanguagePopover(myEvent) {
-    let popover = this.popoverCtrl.create(LangaugePopoverComponent, {
-      queryEle: this.components.toArray()
+  
+  
+  lifeExpectancyAlert(){
+    let alert = this.alertCtrl.create({
+      title: 'Life Expectancy Calculators:',
+      message: 'Social Security Longevity Calculator'.link('https://www.ssa.gov/oact/population/longevity.html') + 
+      '\n livingto100.com calculator'.link('https://www.livingto100.com/calculator'),
+      buttons: ['OK']
     });
-    popover.present({
-      ev: myEvent
-    });
-  }
-
-  presentAccountPopover(myEvent) {
-    let popover = this.popoverCtrl.create(PopoverPage, myEvent, { cssClass: 'account-popover'});
-    popover.present({
-      ev: myEvent
-    });
+    alert.present();
   }
   
+  fraAlert(){
+    let alert = this.alertCtrl.create({
+      title: 'Full Retirement Age Benefit',
+      message: 'Monthly stipend issued if retiring at Full Retirement Age',
+      buttons: ['OK']
+    });
+    alert.present();
+  }
   
   emailResults(data) {
     this.email$.date = "test";
@@ -194,12 +221,12 @@ export class DashboardPage implements OnInit {
         console.log('Response from SsUsersProvider.getUser() :',response);
         
         // Assign Results model some of its values from SsUsersProvider.getUser's response
-              this.results.gender = response.gender;
-              this.results.FRAbenefit = response.FRAbenefit;
-              this.results.totalContribution = response.totalContribution;
-              this.results.isMarried = response.isMarried;
-              this.results.dateOfBirth = response.dateOfBirth;
-              this.totalContribution = response.totalContribution;
+        this.results.gender = response.gender;
+        this.results.FRAbenefit = response.FRAbenefit;
+        this.results.totalContribution = response.totalContribution;
+        this.results.isMarried = response.isMarried;
+        this.results.dateOfBirth = response.dateOfBirth;
+        this.totalContribution = response.totalContribution;
         this.benefitAtFRA = response.FRAbenefit;
         
         // In case the user comes from login page, fill UserDataProvider with:
@@ -255,7 +282,7 @@ export class DashboardPage implements OnInit {
   saveResults() {
     this.resultsProvider.saveResults(this.results, this.userData$.token).subscribe( res => {
     // Response is the same as Results model, except with an additional id: userId 
-    // thats different than the one from ssUsersProvider
+    // which is different than the one from ssUsersProvider
     console.log("Response from resultsProvider.saveResults():",res);
     // Assign UserDataProvider its remaining value from resultsProvider.saveResults's response
     this.userData$.resultsProviderID = res.id;
@@ -265,18 +292,5 @@ export class DashboardPage implements OnInit {
     });
   }
   
-  presentTable(type) {
-    let chartType = type;
-    console.log(chartType);
-    let modal = this.modalCtrl.create(ModalDashboardComponent, {
-      'modalType': chartType,
-      'retYears': this.retYears,
-      'tableMonthly': this.dataObject.monthly,
-      'tableAccumulated': this.dataObject.cumulative
-    });
-    
-    modal.present();
-    
-  }
 
 }
