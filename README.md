@@ -54,7 +54,7 @@ Once that completes, use `ionic serve` to get a local copy running
 ionic serve
 ```
 
-This should deploy the an instance of the app running locally at:
+This should deploy an instance of the app running locally at:
 
 ```
 http://localhost:8100/
@@ -71,7 +71,7 @@ Add additional notes about how to deploy this on a live system
 * [Angular](https://angular.io/)
 * [MongoDB](https://www.mongodb.com/)
 * [Loopback](http://loopback.io/)
-* [ChartJs](http://www.chartjs.org/)
+* [Chart.js](http://www.chartjs.org/)
 
 ## Authors
 
