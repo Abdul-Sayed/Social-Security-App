@@ -1,3 +1,15 @@
+# Screen Shots
+![home](https://user-images.githubusercontent.com/29248268/39676043-6acb9f90-5118-11e8-96d9-9d5a93cf92f3.JPG)
+<br/>
+![infoinput](https://user-images.githubusercontent.com/29248268/39676070-dd22058e-5118-11e8-9c37-8733465ba0d0.JPG)
+<br/>
+![results](https://user-images.githubusercontent.com/29248268/39676074-ef28d294-5118-11e8-9863-73a84493102c.JPG)
+<br/>
+![registration](https://user-images.githubusercontent.com/29248268/39676079-feaaf2b0-5118-11e8-87a8-a8ff779eb62c.JPG)
+<br/>
+![dashboard](https://user-images.githubusercontent.com/29248268/39676083-0d54a5c2-5119-11e8-9049-b232933108af.JPG)
+<br/>
+
 # SSWhen
 
 SSWHEN is a social security calculator that will help you figure out how much retirement income you’ll receive at different claiming ages so you can determine when the optimal age to claim your benefits.
