@@ -41,9 +41,9 @@
             <ion-row align-items-start>
               <ion-col>
                 <div #changeText><strong>Life Expectancy:</strong>
-                  <button ion-button icon-only small clear on-click="lifeExpectancyAlert()" class="customBtn">
-                    <ion-icon name="information-circle"></ion-icon>
-                  </button>               
+                  <!--<button ion-button icon-only small clear on-click="lifeExpectancyAlert()" class="customBtn">-->
+                  <!--  <ion-icon name="information-circle"></ion-icon>-->
+                  <!--</button>               -->
                 </div>
                 <div #changeText text-left>{{lifeExpectancy}}</div>
               </ion-col>
@@ -56,9 +56,9 @@
             <ion-row align-items-start>
               <ion-col>
                 <div #changeText><strong>FRA Benefit Amount:</strong>
-                  <button ion-button icon-only small clear on-click="fraAlert()" class="customBtn">
+                  <span><button ion-button icon-only small clear on-click="fraAlert()" class="customBtn">
                     <ion-icon name="information-circle"></ion-icon>
-                  </button> 
+                  </button></span>
                 </div>
                 <div #changeText text-left>{{benefitAtFRA | currency:'USD':'symbol-narrow':'4.2-2'}}</div>
               </ion-col>

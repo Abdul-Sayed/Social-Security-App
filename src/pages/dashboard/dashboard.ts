@@ -83,7 +83,7 @@ export class DashboardPage implements OnInit {
   isEditable() {
     
     let alert = this.alertCtrl.create({
-      title: 'Edit FRA Benefit or Life Expectancy ?',
+      title: 'Edit FRA Benefit ?',
       inputs: [
         {
           name: 'PIA',
